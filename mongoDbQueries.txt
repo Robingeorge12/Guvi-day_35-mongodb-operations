@@ -513,20 +513,84 @@ ans....db.product.find({"product_color":"indigo","product_price":492})
     db.product.deleteMany({_id: {$in:id } })
   })
   
+   result========[ undefined, undefined, undefined ]
 
-
-.db.product.aggregate([{
+B -...............>     db.product.aggregate([{
     $group: {_id:"$product_price","productid":{$push: "$_id" },count:{$sum:1}, all:{$push:"$$ROOT"} } 
   },
   {$match :{count:{$gt:1} }}
   ]).toArray().map((el,i)=>{
     let id = el.productid.slice(1,el.productid.length)
-    
-    
     console.log(el.all)
     db.product.deleteMany({_id: {$in:id } })
   })
   
 
+[
+all means the the new variable , we can write any varaibles (eb, doc, ar..), inside that we push all the object ,
+"$$ROOT" is for getting all details 
 
-  details of the deleted porduct
+
+]
+
+
+
+      result=====>
+  [
+  {
+    _id: ObjectId('65a0f13645169d786c8c2090'),
+    id: '16',
+    product_name: 'Small Soft Chair',
+    product_price: 47,
+    product_material: 'Cotton',
+    product_color: 'teal'
+  },
+  {
+    _id: ObjectId('65a0f35545169d786c8c209e'),
+    id: '24',
+    product_name: 'Tasty Rubber Cheese',
+    product_price: 47,
+    product_material: 'Frozen',
+    product_color: 'orchid'
+  }
+]
+
+[
+  {
+    _id: ObjectId('65a0f13645169d786c8c2097'),
+    id: '23',
+    product_name: 'Intelligent Steel Pizza',
+    product_price: 95,
+    product_material: 'Cotton',
+    product_color: 'azure'
+  },
+  {
+    _id: ObjectId('65a0f35545169d786c8c209d'),
+    id: '23',
+    product_name: 'Intelligent Steel Pizza',
+    product_price: 95,
+    product_material: 'Cotton',
+    product_color: 'azure'
+  }
+]
+[
+  {
+    _id: ObjectId('65a0f13645169d786c8c2099'),
+    id: '25',
+    product_name: 'Licensed Steel Car',
+    product_price: 20,
+    product_material: 'Cotton',
+    product_color: 'indigo'
+  },
+  {
+    _id: ObjectId('65a0f35545169d786c8c209f'),
+    id: '25',
+    product_name: 'Licensed Steel Car',
+    product_price: 20,
+    product_material: 'Cotton',
+    product_color: 'indigo'
+  }
+]
+
+[ undefined, undefined, undefined ]
+
